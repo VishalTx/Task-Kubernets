@@ -19,7 +19,7 @@ pipeline{
         }
       }
     }
-    stage('Uploading to Nexus') {
+    stage('Uploading to docker') {
      steps{  
          script {
              docker.withRegistry( 'http://'+registry, registryCredentials ) {
