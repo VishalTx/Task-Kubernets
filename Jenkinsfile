@@ -5,7 +5,7 @@ pipeline{
         registryCredentials = "docker"
         registry = "hub.docker.com/repository/docker/vishal7500/task01"
         dockerImage = ''
-        DOCKERHUB_CREDENTIALS=credentials('dokerhub')
+        DOCKERHUB_CREDENTIALS=credentials('docker')
     }
   stages{
     stage('checkout'){
