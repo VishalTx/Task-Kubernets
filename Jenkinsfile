@@ -3,7 +3,7 @@ pipeline{
   environment {
         imageName = "docker-image"
         registryCredentials = "docker"
-        registry = "registry.hub.docker.com/"
+        registry = "https://hub.docker.com/repository/docker/vishal7500/task01"
         dockerImage = ''
     }
   stages{
@@ -21,8 +21,9 @@ pipeline{
     }
     stage('Uploading to dockehub') {
      steps{  
-         steps {
-				sh 'docker push vishal7500/docker-image:latest'
+        
+	docker.withRegistry( 'http://'+registry, registryCredentials )
+		sh 'docker push vishal7500/docker-image:latest'
           }
         }
       }
