@@ -2,7 +2,7 @@ pipeline{
   agent any
   environment {
         imageName = "docker-image"
-        registryCredentials = "nexus"
+        registryCredentials = "https://hub.docker.com/repository/docker/vishal7500/task01"
         registry = "35.175.127.209:9091/"
         dockerImage = ''
     }
@@ -19,7 +19,7 @@ pipeline{
         }
       }
     }
-    stage('Uploading to Nexus') {
+    stage('Uploading to dockehub') {
      steps{  
          script {
              docker.withRegistry( 'http://'+registry, registryCredentials ) {
