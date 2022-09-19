@@ -2,7 +2,7 @@ pipeline{
   agent any
   environment {
         imageName = "docker-image"
-        registryCredentials = "Testing@123"
+        registryCredentials = "docker"
         registry = "hub.docker.com/repository/docker/vishal7500/task01/"
         dockerImage = ''
     }
