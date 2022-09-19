@@ -3,7 +3,7 @@ pipeline{
   environment {
         imageName = "docker-image"
         registryCredentials = "docker"
-        registry = "hub.docker.com/repository/docker/vishal7500/task01"
+        registry = "vishal7500/task01"
         dockerImage = ''
     }
   stages{
