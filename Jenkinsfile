@@ -1,32 +1,39 @@
 pipeline{
-  agent any
-  environment {
-        imageName = "docker-image"
-        registryCredentials = "docker"
-        registry = "registry.hub.docker.com/vishal7500/task01"
-        dockerImage = ''
-    }
-  stages{
-    stage('checkout'){
-      steps{
-         checkout([$class: 'GitSCM', branches: [[name: '**']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/VishalTx/Task-Kubernets.git']]])
-      }
-    }
-     stage('Building image') {
-      steps{
-        script {
-          dockerImage = docker.build imageName
-        }
-      }
-    }
-    stage('Uploading to docker') {
-     steps{  
-         script {
-             docker.withRegistry( 'https://'+registry, registryCredentials ) {
-             dockerImage.push('latest')
-          }
-        }
-      }
-    }
-  }
+
+	agent any
+
+	environment {
+		DOCKERHUB_CREDENTIALS=credentials('docker')
+	}
+
+	stages {
+
+		stage('Build') {
+
+			steps {
+				sh 'docker build -t vishal7500/docker-image:latest .'
+			}
+		}
+
+		stage('Login') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+
+		stage('Push') {
+
+			steps {
+				sh 'docker push vishal7500/docker-image:latest'
+			}
+		}
+	}
+
+	post {
+		always {
+			sh 'docker logout'
+		}
+	}
+
 }
