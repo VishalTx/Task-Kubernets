@@ -9,7 +9,7 @@ pipeline{
   stages{
     stage('checkout'){
       steps{
-         checkout([$class: 'GitSCM', branches: [[name: '**']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/utsav1313/Task-Kubernets.git']]])
+         checkout([$class: 'GitSCM', branches: [[name: '**']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/VishalTx/Task-Kubernets.git']]])
       }
     }
      stage('Building image') {
@@ -21,9 +21,8 @@ pipeline{
     }
     stage('Uploading to dockehub') {
      steps{  
-         script {
-             docker.withRegistry( 'http://'+registry, registryCredentials ) {
-             dockerImage.push('latest')
+         steps {
+				sh 'docker push vishal7500/docker-image:latest'
           }
         }
       }
