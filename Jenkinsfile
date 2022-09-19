@@ -5,7 +5,7 @@ pipeline{
         registryCredentials = "docker"
         registry = "hub.docker.com/repository/docker/vishal7500/task01"
         dockerImage = ''
-        DOCKERHUB_CREDENTIALS=credentials('docker')
+       
     }
   stages{
     stage('checkout'){
@@ -23,7 +23,7 @@ pipeline{
     stage('Uploading to docker') {
      steps{  
          script {
-             docker.withRegistry( 'http://'+registry, DOCKERHUB_CREDENTIALS ) {
+             docker.withRegistry( 'http://'+registry, registryCredentials ) {
              dockerImage.push('latest')
           }
         }
