@@ -9,7 +9,7 @@ pipeline{
   stages{
     stage('checkout'){
       steps{
-         checkout([$class: 'GitSCM', branches: [[name: '**']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/VishalTx/Task-Kubernets.git']]])
+         checkout([$class: 'GitSCM', branches: [[name: '**']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/VishalTx/dockerflaskdemo.git']]])
       }
     }
      stage('Building image') {
@@ -19,21 +19,16 @@ pipeline{
         }
       }
     }
-    stage('Uploading to dockehub') {
+    stage('Uploading to Nexus') {
      steps{  
-        
-	docker.withRegistry( 'http://'+registry, registryCredentials )
-		sh 'docker push vishal7500/docker-image:latest'
+         script {
+             docker.withRegistry( 'http://'+registry, registryCredentials ) {
+             dockerImage.push('latest')
           }
         }
       }
     }
-    stage('Pre Prod..') {
-     steps{  
-         script {
-             sh ' docker run -it -d -p 9090:9090 --name demo localhost:9091/docker-image'
-        }
-      }
-    }
+    
+     
   }
 }
