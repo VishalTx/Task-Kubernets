@@ -7,7 +7,7 @@ spec:
     matchLabels:
       app: flask-test-app
 
-  replicas: 1
+  replicas: 2
 
   template:
     metadata:
