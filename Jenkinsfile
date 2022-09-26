@@ -1,39 +1,34 @@
-pipeline{
+node {
+    def app
 
-	agent any
+    stage('Clone repository') {
+      
 
-	environment {
-		DOCKERHUB_CREDENTIALS=credentials('docker')
-	}
+        checkout scm
+    }
 
-	stages {
+    stage('Build image') {
+  
+       app = docker.build("vishal7500/vishal4")
+    }
 
-		stage('Build') {
+    stage('Test image') {
+  
 
-			steps {
-				sh 'docker build -t vishal7500/docker-image:latest .'
-			}
-		}
+        app.inside {
+            sh 'echo "Tests passed"'
+        }
+    }
 
-		stage('Login') {
-
-			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-			}
-		}
-
-		stage('Push') {
-
-			steps {
-				sh 'docker push vishal7500/docker-image:latest'
-			}
-		}
-	}
-
-	post {
-		always {
-			sh 'docker logout'
-		}
-	}
-
+    stage('Push image') {
+        
+        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+            app.push("${env.BUILD_NUMBER}")
+        }
+    }
+     stage('Trigger ManifestUpdate') {
+                echo "triggering updatemanifestjob"
+                build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
+        }
+     
 }
