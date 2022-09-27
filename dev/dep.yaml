@@ -6,11 +6,9 @@ spec:
   selector:
     matchLabels:
       app: flask-test-app
-<<<<<<< HEAD
-  replicas: 4
-=======
+
   replicas: 2
->>>>>>> 563e2d77e2254d3302f009192c0a4d78ad13e7bb
+
   template:
     metadata:
       labels:
