@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: vishal123
-          image: vishal7500/sader
+          image: vishal7500/sader:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9090
