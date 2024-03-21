@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-test-app
+spec:
+  selector:
+    matchLabels:
+      app: flask-test-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: flask-test-app
+    spec:
+      containers:
+        - name: flask-test-app
+          image: vishal7500/harness:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 9090
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-test-service
+spec:
+  selector:
+    app: flask-test-app
+  ports:
+    - protocol: "TCP"
+      port: 9090
+      targetPort: 9090
+  type: LoadBalancer
