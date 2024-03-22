@@ -38,7 +38,7 @@ unzip
 ADD https://www.free-css.com/assets/files/free-css-templates/download/page296/little-fashion.zip /var/www/html/
 WORKDIR /var/www/html/
 RUN unzip little-fashion.zip
-RUN cp -rvf little-fashion/* .
+RUN cp -rvf 2127_little-fashion/* .
 RUN rm -rf little-fashion little-fashion.zip
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
 EXPOSE 80 22
