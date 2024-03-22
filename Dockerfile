@@ -35,10 +35,10 @@ RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|
 RUN yum install -y httpd \
 zip \
 unzip
-ADD https://www.free-css.com/assets/files/free-css-templates/download/page296/carvilla.zip /var/www/html/
+ADD https://www.free-css.com/assets/files/free-css-templates/download/page296/little-fashion.zip /var/www/html/
 WORKDIR /var/www/html/
-RUN unzip carvilla.zip
-RUN cp -rvf carvilla/* .
-RUN rm -rf carvilla carvilla.zip
+RUN unzip little-fashion.zip
+RUN cp -rvf little-fashion/* .
+RUN rm -rf little-fashion little-fashion.zip
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
 EXPOSE 80 22
